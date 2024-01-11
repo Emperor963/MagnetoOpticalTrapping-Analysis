@@ -26,7 +26,8 @@ Cell[BoxData[{
    RowBox[{"data", " ", "=", " ", 
     RowBox[{"Import", "[", 
      RowBox[{
-     "\"PATH\\\\TO\\\\OBSERVATION\\\\FILE"", ",", 
+     "\"\<C:\\\\Users\\\\saran\\\\ProgrammingFiles\\\\MagnetoOpticalTrapping-\
+Analysis\\\\Modified-Data\\\\GaussianData-ObservationNo1.txt\>\"", ",", 
       "\"\<CSV\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"p1", " ", "=", " ", 
