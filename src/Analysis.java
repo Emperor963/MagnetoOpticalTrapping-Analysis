@@ -9,16 +9,24 @@ import java.util.Arrays;
 public class Analysis{
     
     public static void main(String[] args){
-        String file1 = "Rb-95mA-3.5A-AbsData.csv";
-        String file2 = "Rb-95mA-3.5A-AbsData2.csv";
+        String file1 = "..\\Observed-Data\\Rb-95mA-3.5A-AbsData.csv";
+        String file2 = "..\\Observed-Data\\Rb-95mA-3.5A-AbsData2.csv";
+        String file3 = "..\\Observed-Data\\Rb-95mA-3.5A-AbsData4.csv";
+        String file4 = "..\\Observed-Data\\Rb-95mA-3.5A-AbsData5.csv";
 
         File run1 = new File(file1);
         File run2 = new File(file2);
+        File run3 = new File(file3);
+        File run4 = new File(file4);
         Thread t1 = new Thread(new FReader(run1, 1));
         Thread t2 = new Thread(new FReader(run2, 2));
+        Thread t3 = new Thread(new FReader(run3, 3));
+        Thread t4 = new Thread(new FReader(run4, 4));
 
         t1.start();
         t2.start();
+        t3.start();
+        t4.start();
     }
 
 }
@@ -125,13 +133,13 @@ class FReader implements Runnable{
         }
         //System.out.println(timeStamp[3521]);
         //System.out.println(mWPower[3521]);
-        return gaussianFilter(timeStamp, mWPower, 5);
+        return gaussianFilter(timeStamp, mWPower, 10);
     }
 
     @Override
     public void run(){
         double[][] toWrite = analyze();
-        String filename = "GaussianData-ObservationNo" + String.valueOf(threadNumber);
+        String filename = "..\\Modified-Data\\GaussianData-ObservationNo" + String.valueOf(threadNumber);
         File file = new File(filename +".txt");
         FileWriter writer = null;
         try{
