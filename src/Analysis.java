@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Analysis{
     
@@ -68,10 +69,10 @@ class FReader implements Runnable{
         return pdt;
     }
 
-    public double[][] gaussianFilter(double[] x, double[] y, int width){
-        double[][] result = new double[x.length/(2*width)+40][2]; //stores the (x,y) pair in each element of the result[] array
-        result[0][0] = x[0];
-        result[0][1] = y[0];
+    public ArrayList<Double[]> gaussianFilter(double[] x, double[] y, int width){
+        ArrayList<Double[]> result = new ArrayList<Double[]>(); //stores the (x,y) pair in each element of the result[] array
+        Double[] firstElement = {x[0],y[0]};
+        result.add(firstElement);
 
         double[] kernel = new double[2*width - 1];
 
@@ -96,8 +97,8 @@ class FReader implements Runnable{
             double[] filter = Arrays.copyOfRange(y, index-center, index+center);
             double filterY = dot(kernel, filter)/normalization;
             //if(threadNumber == 1) System.out.println(count + "  " + x[index] + "     " + filterY);
-            result[count][0] = x[index];
-            result[count][1] = filterY;
+            Double[] toAdd = {x[index], filterY};
+            result.add(toAdd);
             count++;
         }
 
@@ -106,7 +107,7 @@ class FReader implements Runnable{
 
 
 
-    public double[][] analyze(){
+    public ArrayList<Double[]> analyze(){
         Scanner scnr = null;
         try{
             scnr = new Scanner(file);
@@ -133,20 +134,20 @@ class FReader implements Runnable{
         }
         //System.out.println(timeStamp[3521]);
         //System.out.println(mWPower[3521]);
-        return gaussianFilter(timeStamp, mWPower, 10);
+        return gaussianFilter(timeStamp, mWPower, 5);
     }
 
     @Override
     public void run(){
-        double[][] toWrite = analyze();
+        ArrayList<Double[]> toWrite = analyze();
         String filename = "..\\Modified-Data\\GaussianData-ObservationNo" + String.valueOf(threadNumber);
         File file = new File(filename +".txt");
         FileWriter writer = null;
         try{
             writer = new FileWriter(file);
-            for(int i = 0; i < toWrite.length; i++){
+            for(int i = 0; i < toWrite.size(); i++){
                 //System.out.println(Double.toString(toWrite[i][0]));
-                writer.write(Math.floor(toWrite[i][0]*1000)/1000 + "," + Math.floor(toWrite[i][1]*1000)/1000 + "\n");
+                writer.write(Math.floor(toWrite.get(i)[0]*1000)/1000 + "," + Math.floor(toWrite.get(i)[1]*1000)/1000 + "\n");
 
             }
 
