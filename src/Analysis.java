@@ -134,7 +134,7 @@ class FReader implements Runnable{
         }
         //System.out.println(timeStamp[3521]);
         //System.out.println(mWPower[3521]);
-        return gaussianFilter(timeStamp, mWPower, 5);
+        return gaussianFilter(timeStamp, mWPower, 12);
     }
 
     @Override
